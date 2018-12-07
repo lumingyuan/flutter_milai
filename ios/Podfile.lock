@@ -1,0 +1,53 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - Flutter (1.0.0)
+  - jastor (0.2.1)
+  - path_provider (0.0.1):
+    - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - AFNetworking (~> 3.1.0)
+  - Flutter (from `.symlinks/flutter/ios`)
+  - jastor (~> 0.2.1)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - jastor
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  jastor: fe9ff71f4b683698253d6a0d9a2561987fd9aff3
+  path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
+  shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
+
+PODFILE CHECKSUM: c77e8d35c790ee65ebdc4bb0398f49497e447bcc
+
+COCOAPODS: 1.5.3

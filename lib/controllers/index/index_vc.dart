@@ -8,6 +8,9 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import './views/index_specail_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:async';
+import './views/index_product_view.dart';
+import './model/recommend_product_model.dart';
+import './views/index_titlebar.dart';
 
 class IndexVC extends StatefulWidget {
   @override
@@ -21,40 +24,83 @@ class _IndexVCState extends State<IndexVC> {
       new GlobalKey<RefreshIndicatorState>();
   IndexModel _indexModel; //首页数据
   List<IndexSpecialModel> _specialModels;
+  List<RecommendProductModel> _recommendProductModels = new List();
+
+  ScrollController _scrollController = new ScrollController();
+  int _curProductPage = 1;
+  bool _isRequesting = false;
 
   @override
   void initState() {
     super.initState();
 
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _requestProduct(++_curProductPage);
+      }
+    });
+
     if (_indexModel == null) {
-      _refreshIndex();
+      _requestIndex();
     }
   }
 
-  Future<Null> _refreshIndex() {
+  Future<Null> _requestIndex() {
     final Completer<Null> completer = new Completer<Null>();
     HttpService.shareInstance().post('MiLaiApi/GetModelIndex',
         params: {"TerminalType": "1001"}, successBlock: (ResponseModel model) {
-        _indexModel = IndexModel.fromJson(model.result);
-        if (!mounted) return;
-        setState(() { });
+      _indexModel = IndexModel.fromJson(model.result);
+      if (!mounted) return;
+      setState(() {});
       completer.complete(null);
     }, errorBlock: (ResponseModel model) {
       print('error:' + model.message);
       completer.complete(null);
     });
 
-    _refreshTheme();
+    _requestTheme();
+
+    _curProductPage = 1;
+    _requestProduct(_curProductPage);
     return completer.future;
   }
 
-  _refreshTheme() {
-    HttpService.shareInstance()
-        .post("MiLaiApi/GetListIndexSpecial", params: {"MerchantID": "0", "PageSize": "6"},
-            successBlock: (ResponseModel model) {
+  _requestTheme() {
+    HttpService.shareInstance().post("MiLaiApi/GetListIndexSpecial",
+        params: {"MerchantID": "0", "PageSize": "6"},
+        successBlock: (ResponseModel model) {
       setState(() {
         _specialModels = getIndexSpecialModelList(model.result);
       });
+    });
+  }
+
+  _requestProduct(int page) {
+    if (_isRequesting) {
+      return;
+    }
+    _isRequesting = true;
+    HttpService.shareInstance()
+        .post("MiLaiApi/GetPageListRecommendRuleProduct", params: {
+      "MerchantID": "0",
+      "PageSize": "3",
+      "PageIndex": page.toString(),
+      "DisplayPositionType": "1002"
+    }, successBlock: (ResponseModel model) {
+      _isRequesting = false;
+      if (_curProductPage == 1) {
+        _recommendProductModels.clear();
+      }
+
+      List list = model.result['Entity'];
+      for (Map item in list) {
+        RecommendProductModel model = RecommendProductModel.fromJson(item);
+        _recommendProductModels.add(model);
+      }
+      setState(() {});
+    }, errorBlock: (ResponseModel model) {
+      _isRequesting = false;
     });
   }
 
@@ -101,7 +147,9 @@ class _IndexVCState extends State<IndexVC> {
 
   //创建广告轮播图
   Widget _createAdCoverFlowSwiper() {
-    if (_indexModel.activityAdList2.length == 0) {
+    if (_indexModel == null ||
+        _indexModel.activityAdList2 == null ||
+        _indexModel.activityAdList2.length == 0) {
       return null;
     }
     return new Column(
@@ -130,6 +178,60 @@ class _IndexVCState extends State<IndexVC> {
     );
   }
 
+  //创建精选好铺
+  Widget _createFeaturedShop() {
+    if (_indexModel == null ||
+        _indexModel.featuredShop == null ||
+        _indexModel.featuredShop.length < 1) {
+      return null;
+    }
+    return new Column(
+      children: _indexModel.featuredShop.map((FeaturedShop shop) {
+        return new CachedNetworkImage(
+          imageUrl: shop.imageUrl,
+          placeholder: new Image.asset("images/no_picture.png"),
+        );
+      }).toList(),
+    );
+  }
+
+  //创建商品列表
+  Widget _createProductList() {
+    List<Widget> children = new List();
+    children.add(new CachedNetworkImage(
+      imageUrl: _indexModel.recommendProductBgUrl,
+    ));
+
+    for (int i = 0; i < (_recommendProductModels.length / 2.0).ceil(); ++i) {
+      int start = i * 2;
+      RecommendProductModel model1 = _recommendProductModels[start];
+      RecommendProductModel model2;
+      if (start + 1 < _recommendProductModels.length) {
+        model2 = _recommendProductModels[start + 1];
+      }
+      children.add(new Container(
+          padding: EdgeInsets.only(left: 5, right: 5),
+          child: new Row(
+            children: <Widget>[
+              new Expanded(
+                flex: 1,
+                child: new IndexProductView(model1),
+              ),
+              new Expanded(
+                flex: 1,
+                child: model2 != null
+                    ? new IndexProductView(model2)
+                    : new Container(),
+              )
+            ],
+          )));
+    }
+
+    return new Column(
+      children: children,
+    );
+  }
+
   //创建列表项
   _createItem(index) {
     if (index == 0) {
@@ -146,7 +248,9 @@ class _IndexVCState extends State<IndexVC> {
       return new Container(
         color: Colors.white,
         child: new GridView.count(
+          padding: EdgeInsets.all(0),
           crossAxisCount: 5,
+          physics: new NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: _createCategoryChildren(),
         ),
@@ -206,18 +310,29 @@ class _IndexVCState extends State<IndexVC> {
       return new IndexSpecailView(
         specailModels: _specialModels,
       );
+    } else if (index == 5) {
+      return _createFeaturedShop();
+    } else if (index == 6) {
+      return _createProductList();
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return new RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: _refreshIndex,
-        child: new ListView.builder(
-          itemCount: 5,
-          itemBuilder: (_, int index) => _createItem(index),
-        ));
+    return new Stack(
+      children: <Widget>[
+        new RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: _requestIndex,
+            child: new ListView.builder(
+              controller: _scrollController,
+              padding: EdgeInsets.all(0),
+              itemCount: 7,
+              itemBuilder: (_, int index) => _createItem(index),
+            )),
+        new IndexTitlebar(_scrollController),
+      ],
+    );
   }
 }

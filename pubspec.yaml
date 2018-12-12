@@ -16,6 +16,7 @@ dependencies:
   common_utils: ^1.0.9                  #常用小工具集合
   json_annotation: ^2.0.0
   flutter_swiper: ^1.1.4                #轮播图
+  pull_to_refresh: ^1.1.6               #下拉刷新上拉加载
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +30,6 @@ flutter:
   assets:
    - images/no_picture.png
    - images/service_ico.png
+   - images/trace_no_login.png
+   - images/login_close_ico.png
+   - images/logo.png

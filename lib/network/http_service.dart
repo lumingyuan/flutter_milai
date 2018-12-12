@@ -35,6 +35,9 @@ class HttpService {
 
     String url = Global.appDomain + '/' + subUrl;
     try {
+      if (params == null) {
+        params = new Map();
+      }
       final String data =
           await platform.invokeMethod('GET', {"url": url, "params": params});
 

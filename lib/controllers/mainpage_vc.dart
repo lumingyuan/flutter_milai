@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_milai/global.dart';
 import 'package:flutter_milai/controllers/categray/categray_vc.dart';
 import 'package:flutter_milai/controllers/index/index_vc.dart';
+import 'search/search_vc.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -21,26 +22,27 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final BottomNavigationBar bottomNavigationBar = new BottomNavigationBar(
+      iconSize: 24,
       items: [
         new BottomNavigationBarItem(
           icon: new Icon(Icons.home),
-          title: new Text("首页"),
+          title: new Text("首页", style: new TextStyle(fontSize: 10)),
         ),
         new BottomNavigationBarItem(
           icon: new Icon(Icons.category),
-          title: new Text("分类"),
+          title: new Text("分类", style: new TextStyle(fontSize: 10)),
         ),
         new BottomNavigationBarItem(
           icon: new Icon(Icons.search),
-          title: new Text('发现'),
+          title: new Text('发现', style: new TextStyle(fontSize: 10)),
         ),
         new BottomNavigationBarItem(
           icon: new Icon(Icons.shopping_cart),
-          title: new Text('购物车'),
+          title: new Text('购物车', style: new TextStyle(fontSize: 10)),
         ),
         new BottomNavigationBarItem(
           icon: new Icon(Icons.person),
-          title: new Text('我的'),
+          title: new Text('我的', style: new TextStyle(fontSize: 10)),
         )
       ],
       currentIndex: _currentIndex,
@@ -60,7 +62,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
             children: <Widget>[
               new IndexVC(),
               new CategrayVC(),
-              new CategrayVC(),
+              new SearchVC(),
               new CategrayVC(),
               new CategrayVC(),
             ],
@@ -68,6 +70,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           ),
         ),
         bottomNavigationBar: bottomNavigationBar,
+        resizeToAvoidBottomPadding: false,
       ),
       theme: Global.themeData,
     );

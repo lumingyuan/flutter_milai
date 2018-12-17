@@ -6,7 +6,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import './model/find_menu_model.dart';
 import '../index/model/recommend_product_model.dart';
 import '../index/views/index_product_view.dart';
-import 'dart:convert';
 import './model/find_selected_model.dart';
 import './views/search_select_cell.dart';
 
@@ -22,7 +21,7 @@ class _PageData {
   int currentPage; //当前加载页
   List<dynamic> datas; //加载的数据
   RefreshController _refreshController = new RefreshController();
-  _PageData({this.hasLoaded = false, this.currentPage = 0, this.datas}) {}
+  _PageData({this.hasLoaded = false, this.currentPage = 0, this.datas});
 }
 
 class _SearchVCState extends State<SearchVC>
@@ -41,27 +40,29 @@ class _SearchVCState extends State<SearchVC>
   }
 
   //获取菜单
-  _requestFindMenu() {
-    HttpService.shareInstance().post('MiLaiApi/GetListFindMenu',
-        successBlock: (ResponseModel model) {
+  _requestFindMenu() async {
+    ResponseModel model =
+        await HttpService.shareInstance().doPost('MiLaiApi/GetListFindMenu');
+    if (model.isSuccess) {
       menuModels.clear();
-      if (model.result != null) {
-        if (_currentTab < 0) {
-          _currentTab = 0;
+      if (model.isSuccess) {
+        if (model.result != null) {
+          if (_currentTab < 0) {
+            _currentTab = 0;
+          }
+          menuModels.addAll(getFindMenuModelList(model.result));
         }
-        menuModels.addAll(getFindMenuModelList(model.result));
-      }
-      _controller = new TabController(length: menuModels.length, vsync: this);
-      _pageData = new List();
-      for (int i = 0; i < menuModels.length; ++i) {
-        _pageData.add(new _PageData(currentPage: 1, hasLoaded: false));
-      }
+        _controller = new TabController(length: menuModels.length, vsync: this);
+        _pageData = new List();
+        for (int i = 0; i < menuModels.length; ++i) {
+          _pageData.add(new _PageData(currentPage: 1, hasLoaded: false));
+        }
 
-      _controller.addListener(_onTabChanged);
-      setState(() {});
-
-      _requestSelect(1); //首先加载精选页面
-    });
+        _controller.addListener(_onTabChanged);
+        setState(() {});
+        _requestSelect(1); //首先加载精选页面
+      }
+    }
   }
 
   //分页切换事件
@@ -86,14 +87,15 @@ class _SearchVCState extends State<SearchVC>
   }
 
   //获取精选页面数据
-  _requestSelect(int page) {
+  _requestSelect(int page) async {
     _PageData data = _pageData.elementAt(0);
-    HttpService.shareInstance().post('MiLaiApi/GetPageListFindSelected',
-        params: {
-          "MerchantID": "0",
-          "PageIndex": page.toString(),
-          "PageSize": "20"
-        }, successBlock: (ResponseModel model) {
+    ResponseModel model = await HttpService.shareInstance()
+        .doPost('MiLaiApi/GetPageListFindSelected', params: {
+      "MerchantID": "0",
+      "PageIndex": page.toString(),
+      "PageSize": "20"
+    });
+    if (model.isSuccess) {
       data.hasLoaded = true;
       if (page == 1 && data.datas != null) {
         data.datas.clear();
@@ -103,7 +105,6 @@ class _SearchVCState extends State<SearchVC>
         if (data.datas == null) {
           data.datas = new List();
         }
-        print(json.encode(model.result['Entity']));
         data.datas.addAll(getFindSelectedModelList(model.result['Entity']));
         setState(() {});
       }
@@ -115,19 +116,20 @@ class _SearchVCState extends State<SearchVC>
           data._refreshController.sendBack(false, RefreshStatus.idle);
         }
       }
-    }, errorBlock: (ResponseModel model) {});
+    }
   }
 
   //获取推荐数据
-  _requestRecommend(int page) {
+  _requestRecommend(int page) async {
     _PageData data = _pageData.elementAt(1);
-    HttpService.shareInstance()
-        .post('MiLaiApi/GetPageListRecommendRuleProduct', params: {
+    ResponseModel model = await HttpService.shareInstance()
+        .doPost('MiLaiApi/GetPageListRecommendRuleProduct', params: {
       "DisplayPositionType": "1003",
       "MerchantID": "0",
       "PageIndex": page.toString(),
       "PageSize": "3"
-    }, successBlock: (ResponseModel model) {
+    });
+    if (model.isSuccess) {
       data.hasLoaded = true;
       if (page == 1 && data.datas != null) {
         data.datas.clear();
@@ -138,7 +140,6 @@ class _SearchVCState extends State<SearchVC>
           data.datas = new List();
         }
         data.datas.addAll(getRecommendProductModelList(model.result['Entity']));
-        setState(() {});
       }
       if (page != 1) {
         if (data.datas != null &&
@@ -148,10 +149,10 @@ class _SearchVCState extends State<SearchVC>
           data._refreshController.sendBack(false, RefreshStatus.idle);
         }
       }
-    }, errorBlock: (ResponseModel model) {
+    } else {
       data._refreshController.sendBack(false, RefreshStatus.idle);
-      setState(() {});
-    });
+    }
+    setState(() {});
   }
 
   //创建精选

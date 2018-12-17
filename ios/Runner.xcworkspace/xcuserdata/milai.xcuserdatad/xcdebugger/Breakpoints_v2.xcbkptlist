@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Runner/AppDelegate.m"
-            timestampString = "566117995.125348"
+            filePath = "Runner/Network/HttpService.m"
+            timestampString = "566699461.866913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "-registerHttpMethodChannel"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "-post:params:complete:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

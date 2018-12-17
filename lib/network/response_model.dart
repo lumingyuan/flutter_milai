@@ -17,6 +17,8 @@ part 'response_model.g.dart';
 
   ResponseModel(this.code,this.message,this.result,);
 
+  bool get isSuccess => this.code==0 ;
+
   factory ResponseModel.fromJson(Map<String, dynamic> srcJson) => _$ResponseModelFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$ResponseModelToJson(this);

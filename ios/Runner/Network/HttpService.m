@@ -35,6 +35,12 @@ static HttpService* g_service = nil;
     return g_service;
 }
 
+- (void)test {
+    NSLog(@"encrypt %@", [self getEncryptParams:@"hello,milai"]);
+    NSLog(@"aes encrypt %@", [@"hello,milaihello,milaihello,milaihello,milaihell" AES256ParmEncryptWithKey:self.aesKey]);
+    NSLog(@"aes decrypt %@", [@"374ad1185ae94bad3e15af0bece66850" AES256ParmDecryptWithKey:self.aesKey]);
+}
+
 - (instancetype) init {
     if (self = [super init]) {
         [self initHttpSessionManager];
@@ -158,6 +164,7 @@ static HttpService* g_service = nil;
     //版本号
     [result setValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] forKey:@"Version"];
     //Mac字符串
+    
     [result setValue:[self getEncryptParams:json] forKey:@"Mac"];
     [result setValue:@"1001" forKey:@"ActionType"];
     [result setValue:[json AES256ParmEncryptWithKey:self.aesKey] forKey:@"Data"];

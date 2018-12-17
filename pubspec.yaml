@@ -17,6 +17,13 @@ dependencies:
   json_annotation: ^2.0.0
   flutter_swiper: ^1.1.4                #轮播图
   pull_to_refresh: ^1.1.6               #下拉刷新上拉加载
+  flutter_wechat: "^0.1.5"              #微信
+  fluttertoast: ^2.1.5                  #toast
+  shared_preferences: ^0.4.3
+  crypto: ^2.0.6                        #支持SHA-1、SHA-256、MD5、HMAC
+  encrypt: ^0.2.0+2
+  device_info: ^0.3.0
+
 
 dev_dependencies:
   flutter_test:
@@ -33,3 +40,6 @@ flutter:
    - images/trace_no_login.png
    - images/login_close_ico.png
    - images/logo.png
+   - images/weixin_ico.png
+   - images/open_eye_ico.png
+   - images/close_eye_ico.png

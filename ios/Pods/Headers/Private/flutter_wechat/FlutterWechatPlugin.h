@@ -1,0 +1,1 @@
+../../../../.symlinks/plugins/flutter_wechat/ios/Classes/FlutterWechatPlugin.h

@@ -18,6 +18,8 @@ typedef void (^CompleteBlock)(Response* response);
 
 +(HttpService *) shareInstance;
 
+- (void)test;
+
 // 请求消息
 - (void) post:(NSString*)url params:(NSDictionary*)params complete:(CompleteBlock)complete;
 

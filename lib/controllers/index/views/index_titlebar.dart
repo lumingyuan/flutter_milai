@@ -28,7 +28,6 @@ class _IndexTitlebarState extends State<IndexTitlebar> {
         } else {
           _backgroundAlpha = 1.0;
         }
-        print('${widget.scrollController.offset}/$offset');
         setState(() {});
       });
     }

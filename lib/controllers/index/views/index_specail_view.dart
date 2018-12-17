@@ -24,7 +24,7 @@ class _IndexSpecailViewState extends State<IndexSpecailView> {
     super.initState();
   }
 
-  void _loadProduct(String adExpandTBID, String adExpandCategoryTBID) {
+  void _loadProduct(String adExpandTBID, String adExpandCategoryTBID) async {
     var params = {
       "MerchantID": "0",
       "PageSize": "6",
@@ -33,8 +33,9 @@ class _IndexSpecailViewState extends State<IndexSpecailView> {
       "AdExpandCategoryTBID": adExpandCategoryTBID,
     };
 
-    HttpService.shareInstance().post("MiLaiApi/GetPageListSpecialProduct",
-        params: params, successBlock: (ResponseModel model) {
+    ResponseModel model = await HttpService.shareInstance()
+        .doPost("MiLaiApi/GetPageListSpecialProduct", params: params);
+    if (model.isSuccess) {
       _productModels.clear();
       for (Map<String, dynamic> entity in model.result['Entity']) {
         SpecialProductList product = SpecialProductList.fromJson(entity);
@@ -42,7 +43,7 @@ class _IndexSpecailViewState extends State<IndexSpecailView> {
       }
       if (!mounted) return;
       setState(() {});
-    });
+    }
   }
 
   Widget _createCategroyTab(int index) {
@@ -62,7 +63,8 @@ class _IndexSpecailViewState extends State<IndexSpecailView> {
             print("${category.className} 点击");
             setState(() {
               _currentCategory = i;
-              _loadProduct(widget.specailModels[index].adExpandTBID, category.adExpandCategoryTBID);
+              _loadProduct(widget.specailModels[index].adExpandTBID,
+                  category.adExpandCategoryTBID);
             });
           },
           textColor:

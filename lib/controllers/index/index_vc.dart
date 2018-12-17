@@ -46,49 +46,50 @@ class _IndexVCState extends State<IndexVC> {
     }
   }
 
-  Future<Null> _requestIndex() {
+  Future<Null> _requestIndex() async {
     final Completer<Null> completer = new Completer<Null>();
-    HttpService.shareInstance().post('MiLaiApi/GetModelIndex',
-        params: {"TerminalType": "1001"}, successBlock: (ResponseModel model) {
+
+    ResponseModel model = await HttpService.shareInstance()
+        .doPost('MiLaiApi/GetModelIndex', params: {"TerminalType": "1001"});
+    completer.complete(null);
+    if (model.isSuccess) {
       _indexModel = IndexModel.fromJson(model.result);
-      if (!mounted) return;
-      setState(() {});
-      completer.complete(null);
-    }, errorBlock: (ResponseModel model) {
-      print('error:' + model.message);
-      completer.complete(null);
-    });
+      if (mounted) {
+        setState(() {});
+      }
+    }
 
     _requestTheme();
 
     _curProductPage = 1;
     _requestProduct(_curProductPage);
-    return completer.future;
+    //return completer.future;
   }
 
-  _requestTheme() {
-    HttpService.shareInstance().post("MiLaiApi/GetListIndexSpecial",
-        params: {"MerchantID": "0", "PageSize": "6"},
-        successBlock: (ResponseModel model) {
-      setState(() {
-        _specialModels = getIndexSpecialModelList(model.result);
-      });
-    });
+  _requestTheme() async {
+    ResponseModel model = await HttpService.shareInstance().doPost(
+        'MiLaiApi/GetListIndexSpecial',
+        params: {"MerchantID": "0", "PageSize": "6"});
+    if (model.isSuccess) {
+      _specialModels = getIndexSpecialModelList(model.result);
+      setState(() {});
+    }
   }
 
-  _requestProduct(int page) {
+  _requestProduct(int page) async {
     if (_isRequesting) {
       return;
     }
     _isRequesting = true;
-    HttpService.shareInstance()
-        .post("MiLaiApi/GetPageListRecommendRuleProduct", params: {
+    ResponseModel model = await HttpService.shareInstance()
+        .doPost("MiLaiApi/GetPageListRecommendRuleProduct", params: {
       "MerchantID": "0",
       "PageSize": "3",
       "PageIndex": page.toString(),
       "DisplayPositionType": "1002"
-    }, successBlock: (ResponseModel model) {
-      _isRequesting = false;
+    });
+    _isRequesting = false;
+    if (model.isSuccess) {
       if (_curProductPage == 1) {
         _recommendProductModels.clear();
       }
@@ -99,9 +100,7 @@ class _IndexVCState extends State<IndexVC> {
         _recommendProductModels.add(model);
       }
       setState(() {});
-    }, errorBlock: (ResponseModel model) {
-      _isRequesting = false;
-    });
+    }
   }
 
   //创建广告轮播图

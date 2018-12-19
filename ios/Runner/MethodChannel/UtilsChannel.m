@@ -8,6 +8,7 @@
 
 #import "UtilsChannel.h"
 #import "NSString+Encryption.h"
+#import <UIKit/UIKit.h>
 
 @implementation UtilsChannel
 
@@ -17,6 +18,16 @@
 
 + (NSString *)AESDecrypt:(NSString *)src Key:(NSString *)key {
     return [src AES256ParmDecryptWithKey:key];
+}
+
+
++ (NSString *)imageBase64:(NSString *)filepath {
+    UIImage* img = [UIImage imageWithContentsOfFile:filepath];
+    
+    NSData *dataObj = UIImageJPEGRepresentation(img, 0.75);
+    
+    NSString* str = [dataObj base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return str;
 }
 
 @end

@@ -4,7 +4,6 @@ import 'package:event_bus/event_bus.dart';
 
 export 'package:pull_to_refresh/pull_to_refresh.dart';
 export 'package:flutter_milai/network/http_service.dart';
-export 'package:cached_network_image/cached_network_image.dart';
 export 'package:flutter_milai/mangers/user_manager.dart';
 export 'package:quiver/strings.dart';
 export 'dart:async';

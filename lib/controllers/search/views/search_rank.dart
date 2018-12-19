@@ -46,9 +46,9 @@ class _SearchBankState extends State<SearchRank>
               borderRadius: BorderRadius.circular(5),
               child: AspectRatio(
                 aspectRatio: 1,
-                child: CachedNetworkImage(
+                child: ImageUtils.imageFromUrl(
+                  productModel.imageUrl,
                   fit: BoxFit.cover,
-                  imageUrl: productModel.imageUrl,
                 ),
               ),
             ),
@@ -60,9 +60,7 @@ class _SearchBankState extends State<SearchRank>
       margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
       padding: EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 15),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5)
-      ),
+          color: Colors.white, borderRadius: BorderRadius.circular(5)),
       child: Column(
         children: <Widget>[
           Container(
@@ -105,7 +103,9 @@ class _SearchBankState extends State<SearchRank>
               ],
             ),
           ),
-          Container(height: 10,),
+          Container(
+            height: 10,
+          ),
           Row(
             mainAxisSize: MainAxisSize.max,
             children: rowProducts,

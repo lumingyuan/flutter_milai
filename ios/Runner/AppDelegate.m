@@ -68,6 +68,8 @@
             result([UtilsChannel AESEncrypt:[call.arguments objectForKey:@"source"] Key:[call.arguments objectForKey:@"key"]]);
         } else if ([@"decryptAES" isEqualToString:call.method]) {
             result([UtilsChannel AESDecrypt:[call.arguments objectForKey:@"source"] Key:[call.arguments objectForKey:@"key"]]);
+        } else if ([@"base64" isEqualToString:call.method]){
+            result([UtilsChannel imageBase64:[call.arguments objectForKey:@"data"]]);
         } else {
             @throw [FlutterError errorWithCode:@"invaild method" message:@"无效的函数" details:nil];
         }

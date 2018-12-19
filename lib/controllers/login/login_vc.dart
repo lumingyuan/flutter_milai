@@ -148,7 +148,6 @@ class _LoginVCState extends State<LoginVC> {
 
   //输入变化
   _onInputChanged(String changed) {
-    print(changed);
     if (_codeMode) {
       _loginBtnEnable =
           isNotEmpty(_accountCtrl.text) && isNotEmpty(_codeCtrl.text);
@@ -377,7 +376,6 @@ class _LoginVCState extends State<LoginVC> {
         body: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            print('Tap');
             _accountFocusNode.unfocus();
             _passFocusNode.unfocus();
             _codeFocusNode.unfocus();

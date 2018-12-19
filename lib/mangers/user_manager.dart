@@ -35,7 +35,7 @@ class UserManager {
   }
 
   //用户资料更新
-  void update({bool fire = false}) async {
+  void update({bool fire = true}) async {
     await _saveToLocal();
 
     if (fire) {

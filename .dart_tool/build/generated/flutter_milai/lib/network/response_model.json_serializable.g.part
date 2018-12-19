@@ -3,13 +3,14 @@
 // **************************************************************************
 
 ResponseModel _$ResponseModelFromJson(Map<String, dynamic> json) {
-  return ResponseModel(
-      json['code'] as int, json['message'] as String, json['result']);
+  return ResponseModel(json['Code'] as int, json['Message'] as String,
+      json['Encrypt'] as bool, json['Result']);
 }
 
 Map<String, dynamic> _$ResponseModelToJson(ResponseModel instance) =>
     <String, dynamic>{
-      'code': instance.code,
-      'message': instance.message,
-      'result': instance.result
+      'Code': instance.code,
+      'Message': instance.message,
+      'Encrypt': instance.encrypt,
+      'Result': instance.result
     };

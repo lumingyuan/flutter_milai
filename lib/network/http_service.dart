@@ -45,40 +45,37 @@ class HttpService {
 
     String encryptStr = json.encode(params);
 
-    var hmacSha256= new Hmac(md5, utf8.encode(kHMACKey));
+    var hmacSha256 = new Hmac(md5, utf8.encode(kHMACKey));
     params['Mac'] = hmacSha256.convert(utf8.encode(encryptStr)).toString();
     params['Version'] = "";
     params['ActionType'] = "1001";
-    params['Data'] = await 
-        NativeUtils.encryptAES(encryptStr, kHMACKey.substring(0, 16));
-    params['UserID'] = UserManager.shareInstance().isLogin ? UserManager.shareInstance().userModel.iD : "0";
+    params['Data'] =
+        await NativeUtils.encryptAES(encryptStr, kHMACKey.substring(0, 16));
+    params['UserID'] = UserManager.shareInstance().isLogin
+        ? UserManager.shareInstance().userModel.iD
+        : "0";
 
     return {"JsonString": params};
   }
 
   Future<ResponseModel> doPost(String subUrl,
-      {Map<String, String> params}) async {
+      {Map<String, String> params, bool encrypt = true}) async {
     String url = Global.appDomain + '/' + subUrl;
-    Map finalParams = await _packParams(params);
+    Map postParams = params;
+    if (encrypt) {
+      postParams = await _packParams(params);
+    }
 
     print('[POST]$url\n$params');
-    Response<dynamic> response = await _dio.post(url, data: finalParams);
-    Map retMap = response.data;
+    Response<dynamic> response = await _dio.post(url, data: postParams);
 
-    bool encrypt = false;
-    if (retMap.containsKey('Encrypt')) {
-      if ('true' == retMap['Encrypt'] || '1' == retMap['Encrypt']) {
-        encrypt = true;
-      }
-    }
+    ResponseModel ret = ResponseModel.fromJson(response.data);
 
-    dynamic result = retMap['Result'];
-    int code = retMap['Code'];
-    String message = code==-1000? "解析错误":retMap['Message'];
-    if (encrypt) {
-      result = await NativeUtils.decryptAES(result, kHMACKey.substring(0, 16));
+    if (ret.encrypt) {
+      ret.result =
+          await NativeUtils.decryptAES(ret.result, kHMACKey.substring(0, 16));
     }
-    return ResponseModel(code, message, result);
+    return ret;
   }
 
   // void post(String subUrl,

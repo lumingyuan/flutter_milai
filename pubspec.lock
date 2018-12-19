@@ -78,13 +78,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "6.2.0"
-  cached_network_image:
-    dependency: "direct main"
-    description:
-      name: cached_network_image
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.5.1"
   charcode:
     dependency: transitive
     description:
@@ -195,13 +188,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_cache_manager:
-    dependency: transitive
+  flutter_advanced_networkimage:
+    dependency: "direct main"
     description:
-      name: flutter_cache_manager
+      name: flutter_advanced_networkimage
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.0+1"
+    version: "0.3.13"
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -513,13 +506,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.5.3"
   term_glyph:
     dependency: transitive
     description:
@@ -562,13 +548,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.9.0+5"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.3"
   vector_math:
     dependency: transitive
     description:

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_milai/global.dart';
 import '../model/index_special_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_milai/network/http_service.dart';
 
 class IndexSpecailView extends StatefulWidget {
@@ -60,7 +59,6 @@ class _IndexSpecailViewState extends State<IndexSpecailView> {
         flex: 1,
         child: new FlatButton(
           onPressed: () {
-            print("${category.className} 点击");
             setState(() {
               _currentCategory = i;
               _loadProduct(widget.specailModels[index].adExpandTBID,
@@ -115,7 +113,7 @@ class _IndexSpecailViewState extends State<IndexSpecailView> {
                       child: new Container(
                         decoration: new BoxDecoration(
                           image: DecorationImage(
-                            image: CachedNetworkImageProvider(product.imageUrl),
+                            image: ImageUtils.imageProviderFromUrl(product.imageUrl),
                             fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.all(
@@ -160,9 +158,7 @@ class _IndexSpecailViewState extends State<IndexSpecailView> {
             IndexSpecialModel model = widget.specailModels.elementAt(index);
             return new Column(
               children: <Widget>[
-                new CachedNetworkImage(
-                  imageUrl: model.imageUrl,
-                ),
+                ImageUtils.imageFromUrl(model.imageUrl),
                 _createCategroyTab(index),
                 _createProductGridView(index),
               ],

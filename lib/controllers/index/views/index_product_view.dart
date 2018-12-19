@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../model/recommend_product_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_milai/global.dart';
 
 class IndexProductView extends StatelessWidget {
@@ -22,7 +21,7 @@ class IndexProductView extends StatelessWidget {
               child: new Container(
                 decoration: new BoxDecoration(
                    image: DecorationImage(
-                            image: CachedNetworkImageProvider(productModel.imageUrl),
+                            image: ImageUtils.imageProviderFromUrl(productModel.imageUrl),
                             fit: BoxFit.cover,
                           ),
                   borderRadius: BorderRadius.only(

@@ -11,15 +11,15 @@ class SearchSelectCell extends StatelessWidget {
     if (this.model.cardImgList.length == 1) {
       //只有一张图片
       return new AspectRatio(
-                aspectRatio: 2,
-                child: new ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: new CachedNetworkImage(
-                    imageUrl: this.model.cardImgList[0],
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              );
+        aspectRatio: 2,
+        child: new ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: ImageUtils.imageFromUrl(
+            this.model.cardImgList[0],
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
     } else if (this.model.cardImgList.length == 2) {
       //两张图
       return new Row(
@@ -32,8 +32,8 @@ class SearchSelectCell extends StatelessWidget {
                 aspectRatio: 1,
                 child: new ClipRRect(
                   borderRadius: BorderRadius.circular(6),
-                  child: new CachedNetworkImage(
-                    imageUrl: this.model.cardImgList[0],
+                  child: ImageUtils.imageFromUrl(
+                    this.model.cardImgList[0],
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -48,8 +48,8 @@ class SearchSelectCell extends StatelessWidget {
                 aspectRatio: 1,
                 child: new ClipRRect(
                   borderRadius: BorderRadius.circular(6),
-                  child: new CachedNetworkImage(
-                    imageUrl: this.model.cardImgList[1],
+                  child: ImageUtils.imageFromUrl(
+                    this.model.cardImgList[1],
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -81,7 +81,7 @@ class SearchSelectCell extends StatelessWidget {
                     height: 40,
                     child: new CircleAvatar(
                       backgroundImage:
-                          CachedNetworkImageProvider(this.model.userHeadImgUrl),
+                          ImageUtils.imageProviderFromUrl(this.model.userHeadImgUrl),
                     ),
                   ),
                   new Container(

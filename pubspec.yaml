@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^0.1.2
-  cached_network_image: ^0.5.1          #网络缓存图片库
+  flutter_advanced_networkimage: ^0.3.13 #网络缓存图片库
   dio: ^1.0.9                           #http网络请求库
   common_utils: ^1.0.9                  #常用小工具集合
   json_annotation: ^2.0.0

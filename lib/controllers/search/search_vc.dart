@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_milai/global.dart';
 
-import 'package:flutter_milai/network/http_service.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import './model/find_menu_model.dart';
 import '../index/model/recommend_product_model.dart';
 import '../index/views/index_product_view.dart';
@@ -282,8 +280,8 @@ class _SearchVCState extends State<SearchVC>
                     children: <Widget>[
                       new Expanded(
                         child: new Container(
-                          child: new CachedNetworkImage(
-                            imageUrl: menuModels[_currentTab].backGroundImgUrl,
+                          child: ImageUtils.imageFromUrl(
+                            menuModels[_currentTab].backGroundImgUrl,
                             fit: BoxFit.cover,
                           ),
                           width: double.infinity,

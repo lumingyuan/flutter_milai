@@ -6,18 +6,21 @@ part 'response_model.g.dart';
 @JsonSerializable()
   class ResponseModel extends Object {
 
-  @JsonKey(name: 'code')
+  @JsonKey(name: 'Code')
   int code;
 
-  @JsonKey(name: 'message')
+  @JsonKey(name: 'Message')
   String message;
 
-  @JsonKey(name: 'result')
+  @JsonKey(name: 'Encrypt')
+  bool encrypt;
+
+  @JsonKey(name: 'Result')
   dynamic result;
 
-  ResponseModel(this.code,this.message,this.result,);
-
   bool get isSuccess => this.code==0 ;
+  
+  ResponseModel(this.code,this.message,this.encrypt,this.result,);
 
   factory ResponseModel.fromJson(Map<String, dynamic> srcJson) => _$ResponseModelFromJson(srcJson);
 

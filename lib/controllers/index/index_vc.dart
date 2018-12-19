@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_milai/network/http_service.dart';
 import 'package:flutter_milai/network/response_model.dart';
+import 'package:flutter_milai/global.dart';
 
 import './model/index_model.dart';
 import './model/index_special_model.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import './views/index_specail_view.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:async';
 import './views/index_product_view.dart';
 import './model/recommend_product_model.dart';
@@ -111,10 +111,9 @@ class _IndexVCState extends State<IndexVC> {
       return null;
     }
     return new Swiper(
-      itemBuilder: (_, index) => new CachedNetworkImage(
-            imageUrl: _indexModel.adRotationList[index].imageUrl,
-            fit: BoxFit.cover,
-          ),
+      itemBuilder: (_, index) => ImageUtils.imageFromUrl(
+          _indexModel.adRotationList[index].imageUrl,
+          fit: BoxFit.cover),
       itemCount: _indexModel.adRotationList.length,
       pagination: new SwiperPagination(
         builder: DotSwiperPaginationBuilder(
@@ -136,9 +135,7 @@ class _IndexVCState extends State<IndexVC> {
         _indexModel.categoryList.length > 0) {
       for (int i = 0; i < _indexModel.categoryList.length; ++i) {
         CategoryList model = _indexModel.categoryList[i];
-        children.add(new CachedNetworkImage(
-          imageUrl: model.imageUrl,
-        ));
+        children.add(ImageUtils.imageFromUrl(model.imageUrl));
       }
     }
     return children;
@@ -153,18 +150,15 @@ class _IndexVCState extends State<IndexVC> {
     }
     return new Column(
       children: <Widget>[
-        new CachedNetworkImage(
-          imageUrl: _indexModel.activityAdList2[0].imageUrl,
-        ),
+        ImageUtils.imageFromUrl(_indexModel.activityAdList2[0].imageUrl),
         new AspectRatio(
           aspectRatio: 375 / 146,
           child: new Swiper(
             itemCount: _indexModel.activityAdList2.length - 1,
             itemBuilder: (_, index) => new Card(
-                  child: new CachedNetworkImage(
-                    imageUrl: _indexModel.activityAdList2[index + 1].imageUrl,
-                    fit: BoxFit.cover,
-                  ),
+                  child: ImageUtils.imageFromUrl(
+                      _indexModel.activityAdList2[index + 1].imageUrl,
+                      fit: BoxFit.cover),
                 ),
             scrollDirection: Axis.horizontal,
             layout: SwiperLayout.DEFAULT,
@@ -186,10 +180,7 @@ class _IndexVCState extends State<IndexVC> {
     }
     return new Column(
       children: _indexModel.featuredShop.map((FeaturedShop shop) {
-        return new CachedNetworkImage(
-          imageUrl: shop.imageUrl,
-          placeholder: new Image.asset("images/no_picture.png"),
-        );
+        return ImageUtils.imageFromUrl(shop.imageUrl);
       }).toList(),
     );
   }
@@ -197,9 +188,7 @@ class _IndexVCState extends State<IndexVC> {
   //创建商品列表
   Widget _createProductList() {
     List<Widget> children = new List();
-    children.add(new CachedNetworkImage(
-      imageUrl: _indexModel.recommendProductBgUrl,
-    ));
+    children.add(ImageUtils.imageFromUrl(_indexModel.recommendProductBgUrl));
 
     for (int i = 0; i < (_recommendProductModels.length / 2.0).ceil(); ++i) {
       int start = i * 2;
@@ -262,26 +251,24 @@ class _IndexVCState extends State<IndexVC> {
         return new Container(
           child: new Column(
             children: <Widget>[
-              new CachedNetworkImage(
-                imageUrl: _indexModel.activityAdList1[0].imageUrl,
+              ImageUtils.imageFromUrl(
+                _indexModel.activityAdList1[0].imageUrl,
               ),
               new Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new CachedNetworkImage(
-                      imageUrl: _indexModel.activityAdList1[1].imageUrl,
+                    child: ImageUtils.imageFromUrl(
+                      _indexModel.activityAdList1[1].imageUrl,
                     ),
                     flex: 1,
                   ),
                   new Expanded(
                     child: new Column(
                       children: <Widget>[
-                        new CachedNetworkImage(
-                          imageUrl: _indexModel.activityAdList1[2].imageUrl,
-                        ),
-                        new CachedNetworkImage(
-                          imageUrl: _indexModel.activityAdList1[3].imageUrl,
-                        ),
+                        ImageUtils.imageFromUrl(
+                            _indexModel.activityAdList1[2].imageUrl),
+                        ImageUtils.imageFromUrl(
+                            _indexModel.activityAdList1[3].imageUrl),
                       ],
                     ),
                     flex: 1,

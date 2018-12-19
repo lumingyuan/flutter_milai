@@ -4,6 +4,8 @@ export './ui/loading_dialog.dart';
 export './navigator_utils.dart';
 export './toast_utils.dart';
 export './native_utils.dart';
+export './image_utils.dart';
+
 export 'package:common_utils/common_utils.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:crypto/crypto.dart';
@@ -15,7 +17,7 @@ int intValueOf(String s) {
 
 //字符串转bool
 bool boolValueOf(String s) {
-  if (isEmpty(s) || s == 'False' || s == '0' || s == 'false') {
+  if (s == null || isEmpty(s) || s == 'False' || s == '0' || s == 'false') {
     return false;
   }
   return true;

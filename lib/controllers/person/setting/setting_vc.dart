@@ -6,6 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'dart:io';
 
 import './views/setting_action_sheet_dialog.dart';
+import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 
 class SettingVC extends StatefulWidget {
   @override
@@ -29,6 +30,23 @@ enum ItemType {
 
 class _SettingVCState extends State<SettingVC> {
   BuildContext _innerContext;
+
+  int _cachedSize = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _loadCachedSize();
+  }
+
+  _loadCachedSize() async {
+    _cachedSize = await getDiskCachedImagesSize();
+    if (_cachedSize == null) {
+      _cachedSize = 0;
+    }
+    setState(() {});
+  }
 
   //更改性别
   _requestSex(String sex) async {
@@ -61,19 +79,34 @@ class _SettingVCState extends State<SettingVC> {
         ratioY: 1,
         maxWidth: 512,
         maxHeight: 512);
+    if (croppedImage == null) {
+      print('用户已取消上传');
+      return;
+    }
+
+    LoadingDialog.show(context, '正在上传...');
+
+    //上传服务器
     List<int> data = await croppedImage.readAsBytes();
-    ResponseModel model = await HttpService.shareInstance()
-        .doPost('MiLaiApi/UpdateHeaderImg', params: {
-      "ID": UserManager.shareInstance().userModel.iD,
-      "SuffixName": "jpeg",
-      "ActionType": "1001",
-      "HeadImageUrl": base64Encode(data)
-    });
+    ResponseModel model =
+        await HttpService.shareInstance().doPost('MiLaiApi/UpdateHeaderImg',
+            params: {
+              "ID": UserManager.shareInstance().userModel.iD,
+              "SuffixName": "jpeg",
+              "ActionType": "1001",
+              "HeadImageUrl": base64Encode(data)
+            },
+            encrypt: false);
+
+    LoadingDialog.hide(context);
+
+    ToastUtils.shortToast(model.message);
     if (model.isSuccess) {
       //修改个人资料
-      print('${model.result['HeadImageUrl']}');
-    } else {
-      ToastUtils.shortToast(model.message);
+      UserManager.shareInstance().userModel.headImageUrl =
+          model.result['HeadImageUrl'];
+      UserManager.shareInstance().update();
+      setState(() {});
     }
   }
 
@@ -81,19 +114,7 @@ class _SettingVCState extends State<SettingVC> {
     print('$type');
     switch (type) {
       case ItemType.ItemType_Birthday:
-        {
-          // showCupertinoDialog(
-          //     context: context,
-          //     builder: (BuildContext context) {
-          //       return CupertinoActionSheet(
-          //         actions: <Widget>[
-          //           Text('男'),
-          //           Text('女'),
-          //         ],
-          //         message: Text('选择性别'),
-          //       );
-          //     });
-        }
+        {}
         break;
       case ItemType.ItemType_Head:
         {
@@ -122,6 +143,12 @@ class _SettingVCState extends State<SettingVC> {
           if (sex != null) {
             _requestSex(sex);
           }
+          break;
+        }
+        case ItemType.ItemType_CleanCache:
+        {
+          await clearDiskCachedImages();
+          await _loadCachedSize();
           break;
         }
       default:
@@ -174,11 +201,9 @@ class _SettingVCState extends State<SettingVC> {
     Widget headWidget = new Container(
       padding: EdgeInsets.only(top: 5, bottom: 5),
       child: new ClipOval(
-        child: CachedNetworkImage(
-          imageUrl: user.headImageUrl,
-          placeholder: Image.asset(
-            'images/person_head_ico.png',
-          ),
+        child: ImageUtils.imageFromUrl(
+          user.headImageUrl,
+          placeholder: Image.asset('images/person_head_ico.png'),
         ),
       ),
     );
@@ -209,7 +234,7 @@ class _SettingVCState extends State<SettingVC> {
                   separatorEnable: false, type: ItemType.ItemType_Wechat),
               _buildItem('关于我们', Container(),
                   marginTop: 10, type: ItemType.ItemType_AboutUs),
-              _buildItem('清除缓存', Container(),
+              _buildItem('清除缓存', Text('${(_cachedSize/1000/1000).toStringAsFixed(2)} M'),
                   type: ItemType.ItemType_CleanCache),
               _buildItem('版本', Text('V2.9.2'),
                   separatorEnable: false, hasMore: false),

@@ -20,8 +20,6 @@ class _SearchTraceState extends State<SearchTrace>
   void initState() {
     super.initState();
 
-    print('initState');
-
     _requestTrace(_currentPage);
   }
 
@@ -115,8 +113,8 @@ class _SearchTraceState extends State<SearchTrace>
                       AspectRatio(
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
-                            child: CachedNetworkImage(
-                              imageUrl: model.imageUrl,
+                            child: ImageUtils.imageFromUrl(
+                              model.imageUrl,
                             )),
                         aspectRatio: 1,
                       ),

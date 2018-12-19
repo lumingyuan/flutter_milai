@@ -24,8 +24,8 @@ class HttpService {
   HttpService() {
     Options op = Options(
       baseUrl: Global.appDomain,
-      connectTimeout: 10 * 1000,
-      receiveTimeout: 3 * 1000,
+      connectTimeout: 30 * 1000,
+      receiveTimeout: 10 * 1000,
       headers: {"Content-Type": "application/json"},
     );
     _dio = new Dio(op);
@@ -61,6 +61,7 @@ class HttpService {
     String url = Global.appDomain + '/' + subUrl;
     Map finalParams = await _packParams(params);
 
+    print('[POST]$url\n$params');
     Response<dynamic> response = await _dio.post(url, data: finalParams);
     Map retMap = response.data;
 

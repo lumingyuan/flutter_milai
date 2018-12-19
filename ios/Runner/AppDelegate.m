@@ -15,8 +15,6 @@
     
     [self registerUtilsMethodChannel];
     
-    [[HttpService shareInstance] test];
-    
     return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

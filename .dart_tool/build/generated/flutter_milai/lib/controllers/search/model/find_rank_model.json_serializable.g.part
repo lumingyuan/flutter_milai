@@ -1,0 +1,45 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+FindRankModel _$FindRankModelFromJson(Map<String, dynamic> json) {
+  return FindRankModel(
+      json['FindLeaderboardTBID'] as String,
+      json['Title'] as String,
+      json['Subtitle'] as String,
+      (json['FindLeaderboardProduct'] as List)
+          ?.map((e) => e == null
+              ? null
+              : FindLeaderboardProduct.fromJson(e as Map<String, dynamic>))
+          ?.toList());
+}
+
+Map<String, dynamic> _$FindRankModelToJson(FindRankModel instance) =>
+    <String, dynamic>{
+      'FindLeaderboardTBID': instance.findLeaderboardTBID,
+      'Title': instance.title,
+      'Subtitle': instance.subtitle,
+      'FindLeaderboardProduct': instance.findLeaderboardProduct
+    };
+
+FindLeaderboardProduct _$FindLeaderboardProductFromJson(
+    Map<String, dynamic> json) {
+  return FindLeaderboardProduct(
+      json['RankingType'] as String,
+      json['ProductTBID'] as String,
+      json['Name'] as String,
+      json['ImageUrl'] as String,
+      json['Price'] as String,
+      json['Value'] as String);
+}
+
+Map<String, dynamic> _$FindLeaderboardProductToJson(
+        FindLeaderboardProduct instance) =>
+    <String, dynamic>{
+      'RankingType': instance.rankingType,
+      'ProductTBID': instance.productTBID,
+      'Name': instance.name,
+      'ImageUrl': instance.imageUrl,
+      'Price': instance.price,
+      'Value': instance.value
+    };

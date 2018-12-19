@@ -14,27 +14,32 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - device_info (0.0.1):
-    - Flutter
   - Flutter (1.0.0)
   - flutter_wechat (0.0.1):
     - Flutter
     - WechatOpenSDK
   - fluttertoast (0.0.2):
     - Flutter
+  - image_cropper (0.0.1):
+    - Flutter
+    - TOCropViewController (~> 2.3.8)
+  - image_picker (0.0.1):
+    - Flutter
   - jastor (0.2.1)
   - path_provider (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
+  - TOCropViewController (2.3.8)
   - WechatOpenSDK (1.8.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
-  - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_wechat (from `.symlinks/plugins/flutter_wechat/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
+  - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - jastor (~> 0.2.1)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -43,17 +48,20 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - jastor
+    - TOCropViewController
     - WechatOpenSDK
 
 EXTERNAL SOURCES:
-  device_info:
-    :path: ".symlinks/plugins/device_info/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
   flutter_wechat:
     :path: ".symlinks/plugins/flutter_wechat/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  image_cropper:
+    :path: ".symlinks/plugins/image_cropper/ios"
+  image_picker:
+    :path: ".symlinks/plugins/image_picker/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
@@ -61,13 +69,15 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  device_info: 76ce0b32e13034d1883be4a382433648f9dcee63
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
   flutter_wechat: 12587364584adf5cecf056711797fe45f3b78114
   fluttertoast: 0a20dcbbb8ecfd1a61b6285651ff2d5989d033fb
+  image_cropper: 046482c5501fc775e17f792d5af4b46c19bb774e
+  image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
   jastor: fe9ff71f4b683698253d6a0d9a2561987fd9aff3
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
+  TOCropViewController: 0a075f02c253e88095143bbac7b013fc6fba5090
   WechatOpenSDK: 3117412f8aafde4758cac1e8d20b93c67cafcfef
 
 PODFILE CHECKSUM: 5a36ceb8141d45b80e31e4315415cbb67d9c8349

@@ -22,7 +22,9 @@ dependencies:
   shared_preferences: ^0.4.3
   crypto: ^2.0.6                        #支持SHA-1、SHA-256、MD5、HMAC
   encrypt: ^0.2.0+2
-  device_info: ^0.3.0
+  event_bus: ^1.0.1
+  image_picker: ^0.4.10
+  image_cropper: ^0.0.9
 
 
 dev_dependencies:
@@ -43,3 +45,26 @@ flutter:
    - images/weixin_ico.png
    - images/open_eye_ico.png
    - images/close_eye_ico.png
+   - images/trace_edit_ico.png
+   - images/person_head_bg.png
+   - images/person_setting_ico.png
+   - images/person_chat_ico.png
+   - images/person_order_1.png
+   - images/person_order_2.png
+   - images/person_order_3.png
+   - images/person_order_4.png
+   - images/person_order_5.png
+   - images/person_head_ico.png
+   - images/person_tuike_ico.png
+   - images/person_tuike_code_ico.png
+   - images/person_phone_ico.png
+   - images/person_activity_1.png
+   - images/person_activity_2.png
+   - images/person_activity_3.png
+   - images/person_activity_4.png
+   - images/person_activity_5.png
+   - images/person_tool_1.png
+   - images/person_tool_2.png
+   - images/person_tool_3.png
+   - images/person_tool_4.png
+   - images/person_tool_5.png

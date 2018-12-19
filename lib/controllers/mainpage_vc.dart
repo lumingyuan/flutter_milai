@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_milai/global.dart';
-import 'package:flutter_milai/controllers/categray/categray_vc.dart';
-import 'package:flutter_milai/controllers/index/index_vc.dart';
-import 'search/search_vc.dart';
 import 'package:flutter_milai/network/wx_auth_manager.dart';
+
+import './index/index_vc.dart';
+import './categray/categray_vc.dart';
+import './search/search_vc.dart';
+import './person/person_vc.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -68,7 +70,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
               new CategrayVC(),
               new SearchVC(),
               new CategrayVC(),
-              new CategrayVC(),
+              new PersonVC(),
             ],
             index: _currentIndex,
           ),

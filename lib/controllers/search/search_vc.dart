@@ -8,6 +8,8 @@ import '../index/model/recommend_product_model.dart';
 import '../index/views/index_product_view.dart';
 import './model/find_selected_model.dart';
 import './views/search_select_cell.dart';
+import './views/search_trace.dart';
+import './views/search_rank.dart';
 
 class SearchVC extends StatefulWidget {
   @override
@@ -127,7 +129,7 @@ class _SearchVCState extends State<SearchVC>
       "DisplayPositionType": "1003",
       "MerchantID": "0",
       "PageIndex": page.toString(),
-      "PageSize": "3"
+      "PageSize": "20"
     });
     if (model.isSuccess) {
       data.hasLoaded = true;
@@ -227,53 +229,12 @@ class _SearchVCState extends State<SearchVC>
     );
   }
 
-  //创建足迹
-  Widget _createTraceWidget() {
-    if (UserManager.shareInstance().isLogin) {
-      return new Container();
-    } else {
-      return new Center(
-        child: new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            new Image.asset('images/trace_no_login.png'),
-            new Container(
-              height: 5,
-            ),
-            new Text(
-              '您尚未登录,请登录',
-              style: new TextStyle(color: new Color(0xffb1b1b1), fontSize: 12),
-            ),
-            new Container(
-              height: 30,
-            ),
-            new Container(
-              height: 30,
-              child: OutlineButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                borderSide: new BorderSide(color: Global.kTintColor),
-                child: new Text('登录 / 注册',
-                    style:
-                        new TextStyle(color: Global.kTintColor, fontSize: 12)),
-                onPressed: () {
-                  NavigatorUtil.goLogin(context);
-                },
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-  }
-
   Widget _createTabViewWidget() {
     List<Widget> children = new List();
     children.add(_createSelectedWidget());
     children.add(_createRecommendWidget());
-    children.add(new Container());
-    children.add(_createTraceWidget());
+    children.add(new SearchRank());
+    children.add(new SearchTrace());
 
     return new TabBarView(controller: _controller, children: children);
   }

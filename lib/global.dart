@@ -11,6 +11,8 @@ export 'dart:convert';
 export 'package:flutter_milai/common/common.dart';
 export 'package:quiver/time.dart';
 export 'package:event_bus/event_bus.dart';
+export 'package:badge/badge.dart';
+export 'package:flutter/material.dart';
 
 final double kScreenWidth = MediaQueryData.fromWindow(window).size.width;
 final double kScreenHeight = MediaQueryData.fromWindow(window).size.height;

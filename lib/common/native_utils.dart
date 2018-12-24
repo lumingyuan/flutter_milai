@@ -26,14 +26,15 @@ class NativeUtils {
     return data;
   }
 
-  static Future<String> imageBase64(String filepath) async {
-    String data = "";
+ static Future<Null> test() async {
     try {
-      data = await platform
-          .invokeMethod('base64', {"data": filepath});  
+      await platform
+          .invokeMethod('test');
     } on PlatformException catch (e) {
       print("native_utils error:" + e.message);
     }
-    return data;
   }
+
+  
+
 }

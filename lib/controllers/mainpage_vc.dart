@@ -3,9 +3,10 @@ import 'package:flutter_milai/global.dart';
 import 'package:flutter_milai/network/wx_auth_manager.dart';
 
 import './index/index_vc.dart';
-import './categray/categray_vc.dart';
+import './category/category_vc.dart';
 import './search/search_vc.dart';
 import './person/person_vc.dart';
+import './shoppingcar/shopping_car_vc.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -67,9 +68,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           child: new IndexedStack(
             children: <Widget>[
               new IndexVC(),
-              new CategrayVC(),
+              new CategoryVC(),
               new SearchVC(),
-              new CategrayVC(),
+              new ShoppingCardVC(),
               new PersonVC(),
             ],
             index: _currentIndex,

@@ -22,6 +22,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.8"
+  badge:
+    dependency: "direct main"
+    description:
+      name: badge
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -577,5 +584,5 @@ packages:
     source: hosted
     version: "2.1.15"
 sdks:
-  dart: ">=2.1.0-dev.5.0 <3.0.0"
+  dart: ">=2.1.0-dev.5.0 <=2.1.0"
   flutter: ">=0.1.4 <2.0.0"

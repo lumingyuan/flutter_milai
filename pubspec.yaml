@@ -25,6 +25,7 @@ dependencies:
   event_bus: ^1.0.1
   image_picker: ^0.4.10
   image_cropper: ^0.0.9
+  badge: ^0.0.3                         #角标
 
 
 dev_dependencies:
@@ -68,3 +69,9 @@ flutter:
    - images/person_tool_3.png
    - images/person_tool_4.png
    - images/person_tool_5.png
+   - images/person_applying_ad.png
+   - images/person_pull_friend_ad.png
+   - images/person_to_apply_ad.png
+   - images/person_join_ad.png
+   - images/service_dialog_bg.png
+   - images/service_dialog_title.png

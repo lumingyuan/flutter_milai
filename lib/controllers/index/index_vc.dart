@@ -63,7 +63,7 @@ class _IndexVCState extends State<IndexVC> {
 
     _curProductPage = 1;
     _requestProduct(_curProductPage);
-    //return completer.future;
+    return completer.future;
   }
 
   _requestTheme() async {
@@ -84,7 +84,7 @@ class _IndexVCState extends State<IndexVC> {
     ResponseModel model = await HttpService.shareInstance()
         .doPost("MiLaiApi/GetPageListRecommendRuleProduct", params: {
       "MerchantID": "0",
-      "PageSize": "3",
+      "PageSize": "20",
       "PageIndex": page.toString(),
       "DisplayPositionType": "1002"
     });

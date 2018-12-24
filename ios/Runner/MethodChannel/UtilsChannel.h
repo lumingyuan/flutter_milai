@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString*)AESDecrypt:(NSString*)src Key:(NSString*)key;
 
-+ (NSString*)imageBase64:(NSString*)filepath;
 
 @end
 

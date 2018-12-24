@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_milai/global.dart';
+import 'package:flutter_milai/controllers/dialogs/services_dialog.dart';
 
 class IndexTitlebar extends StatefulWidget {
   final ScrollController scrollController;
@@ -20,7 +21,9 @@ class _IndexTitlebarState extends State<IndexTitlebar> {
 
     if (widget.scrollController != null) {
       widget.scrollController.addListener(() {
-        double offset = MediaQuery.of(context).size.width * (176-Global.kStateBarHeight-44) / 375;
+        double offset = MediaQuery.of(context).size.width *
+            (176 - Global.kStateBarHeight - 44) /
+            375;
         if (widget.scrollController.offset < offset) {
           _backgroundAlpha = widget.scrollController.offset < 0
               ? 0
@@ -68,21 +71,23 @@ class _IndexTitlebarState extends State<IndexTitlebar> {
               ),
             ),
           ),
-          new Container(
-            height: 44,
-            width: 44,
-            alignment: Alignment.center,
-            child: new Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                new Image.asset('images/service_ico.png'),
-                new Text(
-                  '客服',
-                  style: new TextStyle(color: Colors.white, fontSize: 10),
-                ),
-              ],
-            ),
-          ),
+          GestureDetector(
+            child: Container(
+                height: 44,
+                width: 44,
+                alignment: Alignment.center,
+                child:
+                    Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  Image.asset('images/service_ico.png'),
+                  Text(
+                    '客服',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  )
+                ])),
+            onTap: () {
+              ServicesDialog.show(context);
+            },
+          )
         ],
       ),
     );

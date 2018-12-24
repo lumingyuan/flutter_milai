@@ -25,6 +25,8 @@
 		A1294ADA21B75C47009AB6F8 /* NSString+Encryption.m in Sources */ = {isa = PBXBuildFile; fileRef = A1294AD921B75C47009AB6F8 /* NSString+Encryption.m */; };
 		A1294ADD21B77101009AB6F8 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = A1294ADC21B77101009AB6F8 /* Response.m */; };
 		A13127A921C39F0800807943 /* UtilsChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = A13127A821C39F0800807943 /* UtilsChannel.m */; };
+		A176024B21CB37E200F9358F /* MyFlutterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A176024A21CB37E200F9358F /* MyFlutterViewController.m */; };
+		A176024E21CB3C1300F9358F /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A176024D21CB3C1300F9358F /* TestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +71,10 @@
 		A1294ADC21B77101009AB6F8 /* Response.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
 		A13127A721C39F0800807943 /* UtilsChannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UtilsChannel.h; sourceTree = "<group>"; };
 		A13127A821C39F0800807943 /* UtilsChannel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UtilsChannel.m; sourceTree = "<group>"; };
+		A176024921CB37E200F9358F /* MyFlutterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFlutterViewController.h; sourceTree = "<group>"; };
+		A176024A21CB37E200F9358F /* MyFlutterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFlutterViewController.m; sourceTree = "<group>"; };
+		A176024C21CB3C1300F9358F /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		A176024D21CB3C1300F9358F /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,10 @@
 				97C146F11CF9000F007C117D /* Supporting Files */,
 				1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */,
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
+				A176024921CB37E200F9358F /* MyFlutterViewController.h */,
+				A176024A21CB37E200F9358F /* MyFlutterViewController.m */,
+				A176024C21CB3C1300F9358F /* TestViewController.h */,
+				A176024D21CB3C1300F9358F /* TestViewController.m */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -365,7 +375,9 @@
 				A1294AD221B74CCE009AB6F8 /* HttpService.m in Sources */,
 				A13127A921C39F0800807943 /* UtilsChannel.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
+				A176024E21CB3C1300F9358F /* TestViewController.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				A176024B21CB37E200F9358F /* MyFlutterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

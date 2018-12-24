@@ -34,7 +34,9 @@ class _PersonVCState extends State<PersonVC> {
     new PersonFunctionParams('images/person_tool_2.png', '收货地址', () {}),
     new PersonFunctionParams('images/person_tool_3.png', '客  服', () {}),
     new PersonFunctionParams('images/person_tool_4.png', '意见反馈', () {}),
-    new PersonFunctionParams('images/person_tool_5.png', '帮  助', () {}),
+    new PersonFunctionParams('images/person_tool_5.png', '帮  助', () {
+      NativeUtils.test();
+    }),
   ];
 
   UserCenterModel _userCenterModel;
@@ -49,19 +51,24 @@ class _PersonVCState extends State<PersonVC> {
     });
   }
 
-  _requestCenter() async {
+  Future<Null> _requestCenter() async {
+    final Completer<Null> completer = new Completer<Null>();
     if (!UserManager.shareInstance().isLogin) {
-      return;
+      return completer.future;
     }
 
     ResponseModel model =
         await HttpService.shareInstance().doPost('MiLaiApi/GetUserCenter');
+
+    completer.complete(null);
+
     if (model.isSuccess) {
       _userCenterModel = UserCenterModel.fromJson(model.result);
       setState(() {});
     } else {
       ToastUtils.shortToast(model.message);
     }
+    return completer.future;
   }
 
   Widget _buildUserWidget() {
@@ -84,19 +91,22 @@ class _PersonVCState extends State<PersonVC> {
         Container(
             width: 64,
             height: 64,
-            child: ClipOval(
-              child: ImageUtils.imageFromUrl(imageUrl)
-            )),
+            child: ClipOval(child: ImageUtils.imageFromUrl(imageUrl))),
         Container(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 20,
-              margin: EdgeInsets.only(bottom: 8),
-              child: Text('$name',
-                  style: TextStyle(color: Colors.white, fontSize: 17)),
-            ),
+                height: 20,
+                margin: EdgeInsets.only(bottom: 8),
+                child: Row(children: <Widget>[
+                  Text('$name',
+                      style: TextStyle(color: Colors.white, fontSize: 17)),
+                  Container(width: 3),
+                  isTuike
+                      ? Image.asset('images/person_tuike_ico.png')
+                      : Container(),
+                ])),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -117,12 +127,6 @@ class _PersonVCState extends State<PersonVC> {
                   '$code',
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
-                Container(
-                  width: 3,
-                ),
-                isTuike
-                    ? Image.asset('images/person_tuike_ico.png')
-                    : Container(),
               ],
             )
           ],
@@ -133,6 +137,14 @@ class _PersonVCState extends State<PersonVC> {
 
   //创建用户信息和订单
   Widget _buildUserAndOrder() {
+    if (_userCenterModel != null) {
+      _orderParams[0].badge = _userCenterModel.count1000;
+      _orderParams[1].badge = _userCenterModel.count1001;
+      _orderParams[2].badge = _userCenterModel.count1002;
+      _orderParams[3].badge = _userCenterModel.count1003;
+      _orderParams[4].badge = _userCenterModel.countRefund;
+    }
+
     return Container(
         height: 180 * Global.kScale + 95,
         child: Stack(
@@ -193,14 +205,10 @@ class _PersonVCState extends State<PersonVC> {
   }
 
   Widget _buildTuiKeWidget() {
-    UserModel user = UserManager.shareInstance().userModel;
-    bool isTuike = false;
-    if (user != null) {
-      isTuike = boolValueOf(user.isDistributor);
-    }
-    if (isTuike) {
+    if (_userCenterModel != null &&
+        boolValueOf(_userCenterModel.isDistributor)) {
       return Container(
-        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.only(left: 10, right: 10, top: 10),
         child: PersonTuiKeCardWidget(_userCenterModel),
       );
     }
@@ -208,29 +216,60 @@ class _PersonVCState extends State<PersonVC> {
   }
 
   Widget _buildApplyTuikeiWidget() {
-    return Container();
+    if (UserManager.shareInstance().isLogin) {
+      String imgStr = "";
+      if (_userCenterModel != null) {
+        if (boolValueOf(_userCenterModel.isDistributor)) {
+          if (boolValueOf(_userCenterModel.isMiLaiDistributor)) {
+            imgStr = "images/person_pull_friend_ad.png";
+          } else {
+            if (boolValueOf(_userCenterModel.isMilaiDistributorApply)) {
+              imgStr = "images/person_applying_ad.png";
+            } else {
+              imgStr = "images/person_to_apply_ad.png";
+            }
+          }
+        } else {
+          if (boolValueOf(_userCenterModel.isDistributorApply)) {
+            imgStr = "images/person_applying_ad.png";
+          } else {
+            imgStr = "images/person_join_ad.png";
+          }
+        }
+      }
+
+      return Container(
+        margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+        height: 60,
+        child: isEmpty(imgStr) ? Container() : Image.asset(imgStr),
+      );
+    } else {
+      return Container();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Color(0xfff0f0f0),
-      child: ListView(
-        padding: EdgeInsets.all(0),
-        children: <Widget>[
-          _buildUserAndOrder(),
-          _buildTuiKeWidget(),
-          _buildApplyTuikeiWidget(),
-          Container(
-            padding: EdgeInsets.all(10),
-            child: PersonFunctionCardWidget(_activityParams, '我的活动'),
+    return RefreshIndicator(
+        onRefresh: _requestCenter,
+        child: Container(
+          color: Color(0xfff0f0f0),
+          child: ListView(
+            padding: EdgeInsets.all(0),
+            children: <Widget>[
+              _buildUserAndOrder(),
+              _buildTuiKeWidget(),
+              _buildApplyTuikeiWidget(),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: PersonFunctionCardWidget(_activityParams, '我的活动'),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: PersonFunctionCardWidget(_toolParasm, '我的工具'),
+              ),
+            ],
           ),
-          Container(
-            padding: EdgeInsets.all(10),
-            child: PersonFunctionCardWidget(_toolParasm, '我的工具'),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

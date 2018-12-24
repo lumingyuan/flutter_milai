@@ -12,9 +12,6 @@ part 'user_model.g.dart';
   @JsonKey(name: 'IsDistributorApply')
   String isDistributorApply;
 
-  @JsonKey(name: 'IsDistributor')
-  String isDistributor;
-
   @JsonKey(name: 'PushID')
   String pushID;
 
@@ -120,7 +117,7 @@ part 'user_model.g.dart';
   @JsonKey(name: 'IsVerificationMobile')
   String isVerificationMobile;
 
-  UserModel(this.lastLoginTime,this.isDistributorApply, this.isDistributor,this.pushID,this.address,this.weiXinUnionId,this.weiXinOpenId,this.email,this.headImageUrl,this.account,this.weiXinNickName,this.provinceCode,this.sex,this.qQ,this.integral,this.cityCode,this.isSubscribe,this.sexName,this.terminalType,this.lng,this.mobile,this.aliPay,this.areaCode,this.iD,this.lat,this.weiXin,this.streetCode,this.miLaiMoney,this.weiXinTXOpenId,this.birthday,this.isNewUser,this.nickName,this.realName,this.weiXinPCOpenId,this.level,this.isPush,this.isVerificationEmail,this.isVerificationMobile,);
+  UserModel(this.lastLoginTime,this.isDistributorApply,this.pushID,this.address,this.weiXinUnionId,this.weiXinOpenId,this.email,this.headImageUrl,this.account,this.weiXinNickName,this.provinceCode,this.sex,this.qQ,this.integral,this.cityCode,this.isSubscribe,this.sexName,this.terminalType,this.lng,this.mobile,this.aliPay,this.areaCode,this.iD,this.lat,this.weiXin,this.streetCode,this.miLaiMoney,this.weiXinTXOpenId,this.birthday,this.isNewUser,this.nickName,this.realName,this.weiXinPCOpenId,this.level,this.isPush,this.isVerificationEmail,this.isVerificationMobile,);
 
   factory UserModel.fromJson(Map<String, dynamic> srcJson) => _$UserModelFromJson(srcJson);
 

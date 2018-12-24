@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:badge/badge.dart';
+import 'package:quiver/strings.dart';
 
 class PersonFunctionParams {
   String icon;
   String title;
   VoidCallback onPress;
+  String badge;
 
-  PersonFunctionParams(this.icon, this.title, this.onPress);
+  PersonFunctionParams(this.icon, this.title, this.onPress, {this.badge = ""});
 }
 
 class PersonFunctionCardWidget extends StatelessWidget {
@@ -19,26 +22,38 @@ class PersonFunctionCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> widgets = new List();
     for (PersonFunctionParams param in params) {
-      widgets.add(Expanded(
-          child: FlatButton(
-        onPressed: param.onPress,
-        padding: EdgeInsets.all(0),
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Image.asset(param.icon),
-              Container(
-                height: 4,
+      Widget funWidget = FlatButton(
+              onPressed: param.onPress,
+              padding: EdgeInsets.all(0),
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Image.asset(param.icon),
+                    Container(
+                      height: 4,
+                    ),
+                    Text(
+                      param.title,
+                      style: TextStyle(color: Color(0xff333333), fontSize: 12),
+                      maxLines: 1,
+                    )
+                  ],
+                ),
               ),
-              Text(
-                param.title,
-                style: TextStyle(color: Color(0xff333333), fontSize: 12),
-                maxLines: 1,
-              )
-            ],
-          ),
-        ),
-      )));
+            );
+            if (isEmpty(param.badge) || param.badge == '0') {
+              widgets.add(Expanded(child: funWidget));
+            } else {
+              widgets.add(Expanded(child: Badge.left(
+                value: param.badge,
+                child: funWidget,
+                isRounded: true,
+                positionRight: 10,
+                positionTop: -10,
+                textStyle: TextStyle(fontSize: 12, color: Colors.white),
+                borderSize: 1,
+              )));
+            }
     }
 
     return new Container(

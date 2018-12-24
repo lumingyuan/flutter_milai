@@ -69,13 +69,16 @@ class HttpService {
     print('[POST]$url\n$params');
     Response<dynamic> response = await _dio.post(url, data: postParams);
 
-    ResponseModel ret = ResponseModel.fromJson(response.data);
-
-    if (ret.encrypt) {
-      ret.result =
-          await NativeUtils.decryptAES(ret.result, kHMACKey.substring(0, 16));
+    if (response.statusCode == 200) {
+      ResponseModel ret = ResponseModel.fromJson(response.data);
+      if (ret.encrypt) {
+        ret.result =
+            await NativeUtils.decryptAES(ret.result, kHMACKey.substring(0, 16));
+      }
+      return ret;
+    } else {
+      return ResponseModel(-1, '服务器被火星劫持了～', false, null);
     }
-    return ret;
   }
 
   // void post(String subUrl,

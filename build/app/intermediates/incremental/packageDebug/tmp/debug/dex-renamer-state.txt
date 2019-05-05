@@ -1,0 +1,4 @@
+#Mon Dec 24 13:25:38 CST 2018
+base.0=/Users/milai/Desktop/flutter_milai/build/app/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
